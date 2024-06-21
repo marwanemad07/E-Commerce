@@ -1,0 +1,14 @@
+﻿global using E_Commerce.DAL.Extensions;
+global using E_Commerce.DAL.Repositories.Implemntations;
+global using E_Commerce.DAL.Repositories.Interfaces;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using E_Commerce.DAL.Models;
+global using E_Commerce.DAL.Context;
+global using E_Commerce.DAL.SeedData;
+global using E_Commerce.Extensions;
+global using Microsoft.OpenApi.Writers;
+global using E_Commerce.BLL.Services.Implemntations;
+global using E_Commerce.BLL.Services.Interfaces;
+global using E_Commerce.BLL.DTOs;
+global using E_Commerce.BLL.Helpers;
