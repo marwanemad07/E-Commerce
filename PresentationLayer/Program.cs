@@ -2,6 +2,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -12,11 +14,17 @@ builder.Services.RegisterDbContext(builder.Configuration);
 
 builder.Services.RegisterRepositories();
 builder.Services.RegisterServices();
-builder.Services.RegisterAutoMapper();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddLogging();
+builder.Services.ConfigureApiValidationErrorResponse();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseStatusCodePagesWithReExecute("/error/{0}");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

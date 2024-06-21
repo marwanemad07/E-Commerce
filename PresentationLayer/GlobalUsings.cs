@@ -12,3 +12,7 @@ global using E_Commerce.BLL.Services.Implemntations;
 global using E_Commerce.BLL.Services.Interfaces;
 global using E_Commerce.BLL.DTOs;
 global using E_Commerce.BLL.Helpers;
+global using E_Commerce.Errors;
+global using System.Net;
+global using System.Text.Json;
+global using E_Commerce.Middleware;
