@@ -3,6 +3,9 @@
     public interface IProductRepository 
     {
         public Task<Product?> GetProductByIdAsync(int id);
-        public Task<List<Product>> GetProductsAsync();
+        public IQueryable<Product> GetProducts(int? categoryId, int? brandId);
+        public IQueryable<Product> ApplySearch(IQueryable<Product> query, string search);
+        public IQueryable<Product> ApplySort(IQueryable<Product> query, string sort);
+        public IQueryable<Product> ApplyPagination(IQueryable<Product> query, int pageNumber, int pageSize);
     }
 }

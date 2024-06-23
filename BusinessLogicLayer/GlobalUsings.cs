@@ -5,3 +5,5 @@ global using E_Commerce.DAL.Repositories.Implemntations;
 global using E_Commerce.DAL.Repositories.Interfaces;
 global using E_Commerce.DAL.Models;
 global using AutoMapper;
+global using E_Commerce.BLL.Settings;
+global using Microsoft.EntityFrameworkCore;

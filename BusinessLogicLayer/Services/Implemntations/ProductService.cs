@@ -19,10 +19,23 @@
             return _mapper.Map<Product, ProductDto>(product);
         }
 
-        public async Task<List<ProductDto>> GetProductsAsync()
+        public async Task<List<ProductDto>> GetProductsAsync(ProductSettings settings)
         {
-            var products = await _productRepository.GetProductsAsync();
-            return _mapper.Map<List<Product>, List<ProductDto>>(products);
+            var query = _productRepository.GetProducts(settings.CategoryId, settings.BrandId);
+
+            if(settings.Search != null)
+            {
+                query = _productRepository.ApplySearch(query, settings.Search);
+            }
+
+            if(settings.Sort != null)
+            {
+                query = _productRepository.ApplySort(query, settings.Sort);
+            }
+
+            query = _productRepository.ApplyPagination(query, settings.PageNumber, settings.PageSize);
+
+            return _mapper.Map<List<Product>, List<ProductDto>>(await query.ToListAsync());
         }
     }
 }
