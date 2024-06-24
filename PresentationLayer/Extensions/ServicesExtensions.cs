@@ -8,6 +8,7 @@ namespace E_Commerce.Extensions
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
@@ -15,6 +16,15 @@ namespace E_Commerce.Extensions
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IBrandService, BrandService>();
+        }
+
+        public static void RegisterRedisCache(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton<IConnectionMultiplexer>(opt =>
+            {
+                var configurationOptions = ConfigurationOptions.Parse(configuration.GetConnectionString("Redis"));
+                return ConnectionMultiplexer.Connect(configurationOptions);
+            });
         }
 
         public static void ConfigureApiValidationErrorResponse(this IServiceCollection services)

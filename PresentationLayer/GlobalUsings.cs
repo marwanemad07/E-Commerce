@@ -17,3 +17,4 @@ global using System.Net;
 global using System.Text.Json;
 global using E_Commerce.Middleware;
 global using E_Commerce.BLL.Settings;
+global using StackExchange.Redis;

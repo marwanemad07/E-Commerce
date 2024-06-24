@@ -10,12 +10,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.RegisterDbContext(builder.Configuration);
+builder.Services.RegisterRedisCache(builder.Configuration);
 
 builder.Services.RegisterRepositories();
 builder.Services.RegisterServices();
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 builder.Services.AddLogging();
+
 builder.Services.ConfigureApiValidationErrorResponse();
 
 var app = builder.Build();
