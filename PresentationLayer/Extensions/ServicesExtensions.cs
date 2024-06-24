@@ -48,5 +48,18 @@ namespace E_Commerce.Extensions
                 };
             });
         }
+
+        public static void AddNeededCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("https://localhost:4200");
+                });
+            });
+        }
     }
 }

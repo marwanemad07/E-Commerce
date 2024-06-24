@@ -23,6 +23,8 @@ builder.Services.AddLogging();
 
 builder.Services.ConfigureApiValidationErrorResponse();
 
+builder.Services.AddNeededCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,6 +42,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
