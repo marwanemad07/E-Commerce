@@ -5,7 +5,7 @@ namespace E_Commerce.DAL.Repositories.Implemntations
     public class CartRepository : ICartRepository
     {
         private readonly IDatabase _database;
-
+        
         public CartRepository(IConnectionMultiplexer mux)
         {
             _database = mux.GetDatabase();
@@ -18,13 +18,11 @@ namespace E_Commerce.DAL.Repositories.Implemntations
 
         }
 
-        public async Task<CustomerCart?> UpdateCartAsync(CustomerCart customerCart)
+        public async Task<bool> UpdateCartAsync(CustomerCart customerCart)
         {
-            var updated = _database.StringSet(customerCart.Id,
+            var updated = await _database.StringSetAsync(customerCart.Id,
                 JsonSerializer.Serialize(customerCart), TimeSpan.FromDays(30));
-            if (!updated)
-                return null;
-            return await GetCartAsync(customerCart.Id);
+            return updated;
         }
 
         public async Task<bool> DeleteCartAsync(string customerId)

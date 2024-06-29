@@ -16,6 +16,7 @@ namespace E_Commerce.Extensions
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<ICartService, CartService>();
         }
 
         public static void RegisterRedisCache(this IServiceCollection services, IConfiguration configuration)
