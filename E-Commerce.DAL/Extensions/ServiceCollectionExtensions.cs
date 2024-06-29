@@ -7,6 +7,13 @@
             services.AddDbContext<AppDbContext>(options => {
                 options.UseSqlServer(cfg.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddSignInManager<SignInManager<AppUser>>();
         }
     }
 }

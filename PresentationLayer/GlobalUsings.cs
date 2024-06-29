@@ -18,3 +18,5 @@ global using System.Text.Json;
 global using E_Commerce.Middleware;
 global using E_Commerce.BLL.Settings;
 global using StackExchange.Redis;
+global using E_Commerce.DAL.Models.Identity;
+global using Microsoft.AspNetCore.Identity;

@@ -52,10 +52,12 @@ app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 try
 {
-    SeedData.Seed(context);
+    SeedData.SeedProducts(context);
+    SeedData.SeedUsers(userManager);
 }
 catch (Exception ex)
 {

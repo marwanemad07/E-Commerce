@@ -10,3 +10,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using E_Commerce.DAL.Context;
 global using E_Commerce.DAL.Repositories.Interfaces;
 global using System.Text.Json;
+global using Microsoft.AspNetCore.Identity;
+global using System.ComponentModel.DataAnnotations;
+global using E_Commerce.DAL.Models.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
