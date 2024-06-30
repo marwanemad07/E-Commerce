@@ -1,7 +1,4 @@
-﻿
-using E_Commerce.DAL.Models.Identity;
-
-namespace E_Commerce.BLL.Helpers
+﻿namespace E_Commerce.BLL.Helpers.Mapper
 {
     public class MappingProfile : Profile
     {
@@ -14,7 +11,8 @@ namespace E_Commerce.BLL.Helpers
                 .ForMember(p => p.BrandName, opt => opt.MapFrom(p => p.Brand.Name))
                 .ForMember(p => p.Image, opt => opt.MapFrom<ProductImageResolver>());
 
-            CreateMap<AppUser, UserDto>();
+            CreateMap<AppUser, UserDto>()
+                .ForMember(u => u.Token, opt => opt.MapFrom<JwtTokenResolver>());
             CreateMap<RegisterDto, AppUser>();
         }
     }

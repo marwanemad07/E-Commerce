@@ -1,3 +1,5 @@
+using E_Commerce.BLL.Helpers.Mapper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,12 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureSettings(builder.Configuration);
 
 builder.Services.RegisterDbContext(builder.Configuration);
 builder.Services.RegisterRedisCache(builder.Configuration);
 
 builder.Services.RegisterRepositories();
 builder.Services.RegisterServices();
+builder.Services.RegisterHelpers();
+
+builder.Services.ConfigureAuthentication();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

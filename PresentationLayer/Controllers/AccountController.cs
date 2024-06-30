@@ -1,4 +1,7 @@
-﻿namespace E_Commerce.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+
+namespace E_Commerce.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

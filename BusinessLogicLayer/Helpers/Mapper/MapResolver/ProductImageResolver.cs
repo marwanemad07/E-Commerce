@@ -1,7 +1,6 @@
-﻿
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
-namespace E_Commerce.BLL.Helpers
+namespace E_Commerce.BLL.Helpers.Mapper.MapResolver
 {
     public class ProductImageResolver : IValueResolver<Product, ProductDto, string>
     {
@@ -14,7 +13,7 @@ namespace E_Commerce.BLL.Helpers
 
         public string Resolve(Product source, ProductDto destination, string destMember, ResolutionContext context)
         {
-            if(!string.IsNullOrEmpty(source.Image))
+            if (!string.IsNullOrEmpty(source.Image))
             {
                 return $"{_confg["ApiUrl"]}{source.Image}";
             }

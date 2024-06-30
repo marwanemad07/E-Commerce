@@ -1,8 +1,12 @@
-﻿
-namespace E_Commerce.Extensions
+﻿namespace E_Commerce.Extensions
 {
     public static class ServicesExtensions
     {
+
+        public static void ConfigureSettings(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+        }
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
@@ -19,6 +23,11 @@ namespace E_Commerce.Extensions
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IAccountService, AccountService>();
+        }
+        
+        public static void RegisterHelpers(this IServiceCollection services)
+        {
+            services.AddScoped<IJwtHelper, JwtHelper>();
         }
 
         public static void RegisterRedisCache(this IServiceCollection services, IConfiguration configuration)
@@ -63,6 +72,27 @@ namespace E_Commerce.Extensions
                         .WithOrigins("https://localhost:4200");
                 });
             });
+        }
+
+        public static void ConfigureAuthentication(this IServiceCollection services)
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    var jwtSettings = services.BuildServiceProvider().GetRequiredService<IOptions<JwtSettings>>();
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Value.Key)),
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtSettings.Value.Issuer,
+                        ValidateAudience = false,
+                    };
+                });
         }
     }
 }
