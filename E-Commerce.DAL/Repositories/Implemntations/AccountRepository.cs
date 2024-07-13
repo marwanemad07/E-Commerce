@@ -1,4 +1,6 @@
 ﻿
+using StackExchange.Redis;
+
 namespace E_Commerce.DAL.Repositories.Implemntations
 {
     public class AccountRepository : IAccountRepository
@@ -38,6 +40,15 @@ namespace E_Commerce.DAL.Repositories.Implemntations
         public async Task<SignInResult> SignInAsync(AppUser user, string password)
         {
             return await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(AppUser user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
+        public async Task<IdentityResult> UpdateUserAsync(AppUser user)
+        {
+            return await _userManager.UpdateAsync(user);
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using E_Commerce.DAL.Models.Identity;
-using System.Reflection.Metadata.Ecma335;
-
-namespace E_Commerce.BLL.Services.Implemntations
+﻿namespace E_Commerce.BLL.Services.Implemntations
 {
     public class AccountService : IAccountService
     {
@@ -49,6 +46,95 @@ namespace E_Commerce.BLL.Services.Implemntations
             }
             restDto.StatusCode = 400;
             return restDto;
+        }
+
+        public async Task<RestDto<UserDto?>> GetUserDtoAsyn(string email)
+        {
+            var restDto = new RestDto<UserDto?>();
+            var user = await _accountRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                restDto.StatusCode = 404;
+                return restDto;
+            }
+            restDto.Data = _mapper.Map<AppUser, UserDto>(user);
+            restDto.StatusCode = 200;
+            return restDto;
+        }
+
+        public async Task<RestDto<bool>> CheckEmailExists(string email)
+        {
+            var restDto = new RestDto<bool>();
+            var user = await _accountRepository.GetUserByEmailAsync(email);
+            if(user == null)
+            {
+                restDto.StatusCode = 404;
+                restDto.Data = false;
+                return restDto;
+            }
+            restDto.StatusCode = 200;
+            restDto.Data = true;
+            return restDto;
+        }
+
+        public async Task<RestDto<UserProfileDto?>> GetUserProfileDtoAsync(string email)
+        {
+            var restDto = new RestDto<UserProfileDto?>();
+            var user = await _accountRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                restDto.StatusCode = 404;
+                return restDto;
+            }
+            restDto.Data = _mapper.Map<AppUser, UserProfileDto>(user);
+            restDto.StatusCode = 200;
+            return restDto;
+
+        }
+
+        public async Task<RestDto<UserProfileDto?>> UpdateProfileAsync(string email, UserProfileDto userProfileDto)
+        {
+            var restDto = new RestDto<UserProfileDto?>();
+            var user = await _accountRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                restDto.StatusCode = 404;
+                return restDto;
+            }
+            user = _mapper.Map<UserProfileDto, AppUser>(userProfileDto, user);
+            var result = await _accountRepository.UpdateUserAsync(user);
+            if (result.Succeeded)
+            {
+                restDto.Data = _mapper.Map<AppUser, UserProfileDto>(user);
+                restDto.StatusCode = 200;
+                return restDto;
+            }
+            restDto.StatusCode = 400;
+            return restDto;
+        }
+
+        public async Task<RestDto<UserDto?>> ChangePasswordAsync(string email, ChangePasswordDto changePasswordDto)
+        {
+
+            var resulDto = new RestDto<UserDto?>();
+            var user = await _accountRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                resulDto.StatusCode = 404;
+                return resulDto;
+            }
+            var result = await _accountRepository.ChangePasswordAsync(user,
+                changePasswordDto.OldPassword,
+                changePasswordDto.NewPassword);
+            if (result.Succeeded)
+            {
+                user = await _accountRepository.GetUserByEmailAsync(email);
+                resulDto.Data = _mapper.Map<AppUser, UserDto>(user!);
+                resulDto.StatusCode = 200;
+                return resulDto;
+            }
+            resulDto.StatusCode = 400;
+            return resulDto;
         }
     }
 }

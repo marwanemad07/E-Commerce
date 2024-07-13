@@ -14,6 +14,8 @@
             CreateMap<AppUser, UserDto>()
                 .ForMember(u => u.Token, opt => opt.MapFrom<JwtTokenResolver>());
             CreateMap<RegisterDto, AppUser>();
+            CreateMap<AppUser, UserProfileDto>();
+            CreateMap<UserProfileDto, AppUser>();
         }
     }
 }

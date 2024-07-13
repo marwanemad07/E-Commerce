@@ -24,3 +24,5 @@ global using StackExchange.Redis;
 global using System.Net;
 global using System.Text;
 global using System.Text.Json;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Security.Claims;
