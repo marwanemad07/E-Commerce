@@ -22,6 +22,7 @@ builder.Services.RegisterServices();
 builder.Services.RegisterHelpers();
 
 builder.Services.ConfigureAuthentication();
+builder.Services.ConfigureSwagger();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
