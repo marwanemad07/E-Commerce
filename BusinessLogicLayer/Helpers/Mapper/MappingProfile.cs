@@ -16,6 +16,15 @@
             CreateMap<RegisterDto, AppUser>();
             CreateMap<AppUser, UserProfileDto>();
             CreateMap<UserProfileDto, AppUser>();
+
+            CreateMap<CustomerCart, Order>()
+                .ForMember(o => o.Id, opt => opt.Ignore())
+                .ForMember(d => d.TotalPrice, opt => opt.MapFrom(opt => opt.Items.Sum(oi => oi.Price * oi.Quantity)))
+                .ForMember(o => o.OrderItems, c => c.MapFrom<CartItemsToOrderItemsResolver>());
+
+            CreateMap<Order, OrderDto>()
+                .ForMember(d => d.OrderItems, opt => opt.MapFrom<OrderItemToDtoResolver>())
+                .ForMember(d => d.ShippingMethod, opt => opt.MapFrom(o => o.ShippingMethod.Name));
         }
     }
 }

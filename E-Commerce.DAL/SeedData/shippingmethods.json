@@ -1,0 +1,42 @@
+[
+    {
+        "Name": "Standard Shipping",
+        "Price": 7.50
+    },
+    {
+        "Name": "Expedited Shipping",
+        "Price": 15.00
+    },
+    {
+        "Name": "Two-Day Shipping",
+        "Price": 22.50
+    },
+    {
+        "Name": "Overnight Shipping",
+        "Price": 40.00
+    },
+    {
+        "Name": "Same-Day Delivery",
+        "Price": 75.00
+    },
+    {
+        "Name": "International Shipping",
+        "Price": 62.50
+    },
+    {
+        "Name": "Standard Freight Shipping",
+        "Price": 300.00
+    },
+    {
+        "Name": "Express Freight Shipping",
+        "Price": 450.00
+    },
+    {
+        "Name": "Courier Services",
+        "Price": 60.00
+    },
+    {
+        "Name": "Local Delivery Services",
+        "Price": 20.00
+    }
+]

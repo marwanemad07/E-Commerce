@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
@@ -11,8 +12,11 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<CustomerCart>> GetCart(string id)
+        public async Task<ActionResult<CustomerCart>> GetCart()
         {
+            string? id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(id == null) 
+                return BadRequest(new ApiResponse(400, "Token hasn't a name identifier"));
             var cart = await _cartService.GetCartAsync(id);
             cart ??= await _cartService.UpdateCartAsync(new CustomerCart(id));
             return Ok(cart);
@@ -26,8 +30,11 @@
         }
 
         [HttpDelete]
-        public async Task<ActionResult<bool>> DeleteCart(string id)
+        public async Task<ActionResult<bool>> DeleteCart()
         {
+            string? id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (id == null)
+                return BadRequest(new ApiResponse(400, "Token hasn't a name identifier"));
             var deleted = await _cartService.DeleteCartAsync(id);
             return deleted ? NoContent() : NotFound(new ApiResponse(404));
         }

@@ -42,6 +42,14 @@ namespace E_Commerce.DAL.SeedData
                     context.Products.AddRange(products);
                     await context.SaveChangesAsync();
                 }
+                // Seeding shipping methods
+                if(!context.ShippingMethods.Any())
+                {
+                    var methodsData = File.ReadAllText(seedDataPath + "/shippingmethods.json");
+                    var methods = JsonSerializer.Deserialize<List<ShippingMethod>>(methodsData);
+                    context.ShippingMethods.AddRange(methods);
+                    await context.SaveChangesAsync();
+                }
             }
             catch (Exception ex)
             {

@@ -17,6 +17,8 @@ namespace E_Commerce.Extensions
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IShippingMethodsRepository, ShippingMethodsRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
@@ -26,8 +28,9 @@ namespace E_Commerce.Extensions
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
-        
+
         public static void RegisterHelpers(this IServiceCollection services)
         {
             services.AddScoped<IJwtHelper, JwtHelper>();
